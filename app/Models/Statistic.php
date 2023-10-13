@@ -17,7 +17,9 @@ class Statistic extends Model
 
     public static function incrementStatistics($key = 'total_exceptions')
     {
-        $stats = self::query()->first();
+        $stats = self::query()
+            ->whereDate('created_at', now()->toDate())
+            ->firstOrCreate();
 
         $stats->{$key} ++;
         $stats->save();

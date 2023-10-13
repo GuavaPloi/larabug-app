@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Statistic;
 use Ramsey\Uuid\Uuid;
 use App\Models\Exception;
 use Illuminate\Support\Arr;
@@ -57,6 +58,8 @@ class ApiController extends Controller
             'user' => $request->input('user'),
             'project_version' => array_get($request->input('exception'), 'project_version'),
         ], $project, now()));
+
+        Statistic::incrementStatistics();
 
         return response([
             'id' => $id
